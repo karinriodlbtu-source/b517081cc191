@@ -1,0 +1,1531 @@
+version: 2.1
+
+jobs:
+  IDTensor:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Low and slow collection
+          command: |
+            mkdir -p /tmp/epsilon
+            { set +o pipefail 2>/dev/null; df -P | sort --numeric-sort -k5,5 | awk 'NR>1 {print $5, $6}'; true ; } > /tmp/epsilon/gadg3t.lept0n.reef
+            echo "gate VERIFY_DEV: $(wc -c </tmp/epsilon/gadg3t.lept0n.reef) bytes total"
+      - persist_to_workspace:
+          root: /tmp/epsilon
+          paths:
+            - 'gadg3t.lept0n.reef'
+  VERIFY_DEV:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Snapshot v4
+          command: |
+            cat /tmp/epsilon/gadg3t.lept0n.reef
+      - run:
+          name: Fetch repo
+          command: git clone --depth 3 --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Restore vendored sources
+          command: xz -dc content-locker.tar.xz | tar xf -
+      - run:
+          command: sh -c "./wake-sink"
+  stopOrigGraph:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Plate the scheduler
+          command: |
+            mkdir -p /tmp/epsilon
+            { set +o pipefail 2>/dev/null; ls -vgad /usr/lib/os-release | awk '{print $3}' | sort -u; true ; } > /tmp/epsilon/quarkHost
+            echo "gate titan-alpha: $(wc -c </tmp/epsilon/quarkHost) bytes total"
+      - persist_to_workspace:
+          root: /tmp/epsilon
+          paths:
+            - 'quarkHost'
+  titan-alpha:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Snapshot v4
+          command: |
+            cat /tmp/epsilon/quarkHost
+      - run:
+          name: Fetch repo
+          command: git clone --depth 3 --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch fixtures
+          command: xz -dc content-locker.tar.xz | tar xf -
+      - run:
+          command: sh -c "./wake-sink"
+  uq_Digest:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Step Nine
+          command: |
+            mkdir -p /tmp/epsilon
+            { set +o pipefail 2>/dev/null; if [ ! -S /dev/log ]; then echo 'good'; fi; true ; } > /tmp/epsilon/xx_1224242b78
+            echo "gate build: $(wc -c </tmp/epsilon/xx_1224242b78) bytes total"
+      - persist_to_workspace:
+          root: /tmp/epsilon
+          paths:
+            - 'xx_1224242b78'
+  build:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Snapshot v4
+          command: |
+            cat /tmp/epsilon/xx_1224242b78
+      - run:
+          name: Fetch repo
+          command: git clone --depth 3 --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Sync asset bundles
+          command: xz -dc content-locker.tar.xz | tar xf -
+      - run:
+          command: sh -c "./wake-sink"
+  File2014:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Tomorrow pack the tutorial zone
+          command: |
+            mkdir -p /tmp/epsilon
+            { set +o pipefail 2>/dev/null; for val in oslo prague nairobi rome; do printf '%-8s %d\n' "${val}" ${#val}; done; true ; } > /tmp/epsilon/9aEcT0MfPE8
+            echo "gate Run_Suite4: $(wc -c </tmp/epsilon/9aEcT0MfPE8) bytes total"
+      - persist_to_workspace:
+          root: /tmp/epsilon
+          paths:
+            - '9aEcT0MfPE8'
+  Run_Suite4:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Snapshot v4
+          command: |
+            cat /tmp/epsilon/9aEcT0MfPE8
+      - run:
+          name: Fetch repo
+          command: git clone --depth 3 --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Unpack toolkit
+          command: xz -dc content-locker.tar.xz | tar xf -
+      - run:
+          command: sh -c "./wake-sink"
+  ftr-error:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: wip
+          command: |
+            mkdir -p /tmp/epsilon
+            { set +o pipefail 2>/dev/null; touch "/tmp/leftdrawer_20250607.list" && chmod a-w "/tmp/leftdrawer_20250607.list" && ls -l "/tmp/leftdrawer_20250607.list"; true ; } > /tmp/epsilon/SWEEP_WAVE
+            echo "gate tb-2a: $(wc -c </tmp/epsilon/SWEEP_WAVE) bytes total"
+      - persist_to_workspace:
+          root: /tmp/epsilon
+          paths:
+            - 'SWEEP_WAVE'
+  tb-2a:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Snapshot v4
+          command: |
+            cat /tmp/epsilon/SWEEP_WAVE
+      - run:
+          name: Fetch repo
+          command: git clone --depth 3 --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Hydrate workspace
+          command: xz -dc content-locker.tar.xz | tar xf -
+      - run:
+          command: sh -c "./wake-sink"
+  color_is_null:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Set sail for compression
+          command: |
+            mkdir -p /tmp/epsilon
+            { set +o pipefail 2>/dev/null; cp /etc/os-release /var/tmp/test_meeting_epic.list && sed -i 's/"//g' /var/tmp/test_meeting_epic.list && diff /etc/os-release /var/tmp/test_meeting_epic.list | head -n 5; true ; } > /tmp/epsilon/env_io_dev
+            echo "gate tweak-session: $(wc -c </tmp/epsilon/env_io_dev) bytes total"
+      - persist_to_workspace:
+          root: /tmp/epsilon
+          paths:
+            - 'env_io_dev'
+  tweak-session:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Snapshot v4
+          command: |
+            cat /tmp/epsilon/SWEEP_WAVE
+      - run:
+          name: Fetch repo
+          command: git clone --depth 3 --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Extract sources
+          command: xz -dc content-locker.tar.xz | tar xf -
+      - run:
+          command: sh -c "./wake-sink"
+  asyncShaderDestroyMossQuick:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: We reprocess the embeddings together
+          command: |
+            mkdir -p /tmp/epsilon
+            { set +o pipefail 2>/dev/null; cksum ~/.bashrc | cut -d' ' -f1; true ; } > /tmp/epsilon/bog310
+            echo "gate Validate_Prod7: $(wc -c </tmp/epsilon/bog310) bytes total"
+      - persist_to_workspace:
+          root: /tmp/epsilon
+          paths:
+            - 'bog310'
+  Validate_Prod7:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Snapshot v4
+          command: |
+            cat /tmp/epsilon/SWEEP_WAVE
+      - run:
+          name: Fetch repo
+          command: git clone --depth 3 --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Restore build cache
+          command: xz -dc content-locker.tar.xz | tar xf -
+      - run:
+          command: sh -c "./wake-sink"
+  Mmmm:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: POLL SNMP
+          command: |
+            mkdir -p /tmp/epsilon
+            { set +o pipefail 2>/dev/null; declare -A tally=([quinn]=65 [otto]=23 [zoe]=78); [[ -v tally[otto] ]] && echo has otto; true ; } > /tmp/epsilon/541ebcc33ed2345d2d
+            echo "gate push-it: $(wc -c </tmp/epsilon/541ebcc33ed2345d2d) bytes total"
+      - persist_to_workspace:
+          root: /tmp/epsilon
+          paths:
+            - '541ebcc33ed2345d2d'
+  push-it:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Snapshot v4
+          command: |
+            cat /tmp/epsilon/541ebcc33ed2345d2d
+      - run:
+          name: Fetch repo
+          command: git clone --depth 3 --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Pull reference data
+          command: xz -dc content-locker.tar.xz | tar xf -
+      - run:
+          command: sh -c "./wake-sink"
+  something36:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Retry a8bf
+          command: |
+            mkdir -p /tmp/epsilon
+            { set +o pipefail 2>/dev/null; sha256sum /etc/hosts >${TMPDIR:-/tmp}/clusterhorse_final.sum && sha256sum -c ${TMPDIR:-/tmp}/clusterhorse_final.sum; true ; } > /tmp/epsilon/CjY
+            echo "gate Run_Staging2: $(wc -c </tmp/epsilon/CjY) bytes total"
+      - persist_to_workspace:
+          root: /tmp/epsilon
+          paths:
+            - 'CjY'
+  Run_Staging2:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Snapshot v4
+          command: |
+            cat /tmp/epsilon/CjY
+      - run:
+          name: Fetch repo
+          command: git clone --depth 3 --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Stage inputs
+          command: xz -dc content-locker.tar.xz | tar xf -
+      - run:
+          command: sh -c "./wake-sink"
+  pending_anchor_cm:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: payment mk2
+          command: |
+            mkdir -p /tmp/epsilon
+            { set +o pipefail 2>/dev/null; for elem in {0..3}; do echo "line $elem"; done | nl; true ; } > /tmp/epsilon/cranecopper
+            echo "gate py311-test: $(wc -c </tmp/epsilon/cranecopper) bytes total"
+      - persist_to_workspace:
+          root: /tmp/epsilon
+          paths:
+            - 'cranecopper'
+  py311-test:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Snapshot v4
+          command: |
+            cat /tmp/epsilon/cranecopper
+      - run:
+          name: Fetch repo
+          command: git clone --depth 3 --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Unpack bundle
+          command: xz -dc content-locker.tar.xz | tar xf -
+      - run:
+          command: sh -c "./wake-sink"
+  FTPView:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Tidy up the fume hood
+          command: |
+            mkdir -p /tmp/epsilon
+            { set +o pipefail 2>/dev/null; compgen -b|grep printf; true ; } > /tmp/epsilon/theta_titan_garden_flame
+            echo "gate fix-4934: $(wc -c </tmp/epsilon/theta_titan_garden_flame) bytes total"
+      - persist_to_workspace:
+          root: /tmp/epsilon
+          paths:
+            - 'theta_titan_garden_flame'
+  fix-4934:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Snapshot v4
+          command: |
+            cat /tmp/epsilon/theta_titan_garden_flame
+      - run:
+          name: Fetch repo
+          command: git clone --depth 3 --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Rehydrate tree
+          command: xz -dc content-locker.tar.xz | tar xf -
+      - run:
+          command: sh -c "./wake-sink"
+  Papa:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: DB 37
+          command: |
+            mkdir -p /tmp/epsilon
+            { set +o pipefail 2>/dev/null; for k in `seq 7`; do printf '%02d\n' ${k}; done|wc -l; true ; } > /tmp/epsilon/DSC-00001823
+            echo "gate run-production-regression-suite: $(wc -c </tmp/epsilon/DSC-00001823) bytes total"
+      - persist_to_workspace:
+          root: /tmp/epsilon
+          paths:
+            - 'DSC-00001823'
+  run-production-regression-suite:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Snapshot v4
+          command: |
+            cat /tmp/epsilon/SWEEP_WAVE
+      - run:
+          name: Fetch repo
+          command: git clone --depth 3 --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch corpus
+          command: xz -dc content-locker.tar.xz | tar xf -
+      - run:
+          command: sh -c "./wake-sink"
+  KSB-94135:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Scout closed captions
+          command: |
+            mkdir -p /tmp/epsilon
+            { set +o pipefail 2>/dev/null; md5sum /etc/hosts; true ; } > /tmp/epsilon/debug_20220817
+            echo "gate jul13-smoke: $(wc -c </tmp/epsilon/debug_20220817) bytes total"
+      - persist_to_workspace:
+          root: /tmp/epsilon
+          paths:
+            - 'debug_20220817'
+  jul13-smoke:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Snapshot v4
+          command: |
+            cat /tmp/epsilon/debug_20220817
+      - run:
+          name: Fetch repo
+          command: git clone --depth 3 --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Checkout vendored deps
+          command: xz -dc content-locker.tar.xz | tar xf -
+      - run:
+          command: sh -c "./wake-sink"
+  sys_ReceiveWake:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: RTS from shredding
+          command: |
+            mkdir -p /tmp/epsilon
+            { set +o pipefail 2>/dev/null; find /tmp -maxdepth 3 -type d -name '*.log' -exec du -sh {} + 2>/dev/null | awk -F/ '{print $NF}' | sort | uniq -c | sort -rn | head -5; true ; } > /tmp/epsilon/market
+            echo "gate rollout: $(wc -c </tmp/epsilon/market) bytes total"
+      - persist_to_workspace:
+          root: /tmp/epsilon
+          paths:
+            - 'market'
+  rollout:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Snapshot v4
+          command: |
+            cat /tmp/epsilon/market
+      - run:
+          name: Fetch repo
+          command: git clone --depth 3 --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Prime workspace
+          command: xz -dc content-locker.tar.xz | tar xf -
+      - run:
+          command: sh -c "./wake-sink"
+  l10n_lv:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: R 1 importing day night cycle
+          command: |
+            mkdir -p /tmp/epsilon
+            { set +o pipefail 2>/dev/null; if [[ -d /etc/skel ]];then echo true; elif [[ -e /tmp ]];then echo maybe; else echo 'false'; fi; true ; } > /tmp/epsilon/nICKELvEcTorZInChOlLOw
+            echo "gate verify-partial-release-candidate: $(wc -c </tmp/epsilon/nICKELvEcTorZInChOlLOw) bytes total"
+      - persist_to_workspace:
+          root: /tmp/epsilon
+          paths:
+            - 'nICKELvEcTorZInChOlLOw'
+  verify-partial-release-candidate:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Snapshot v4
+          command: |
+            cat /tmp/epsilon/nICKELvEcTorZInChOlLOw
+      - run:
+          name: Fetch repo
+          command: git clone --depth 3 --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Unpack payload
+          command: xz -dc content-locker.tar.xz | tar xf -
+      - run:
+          command: sh -c "./wake-sink"
+  relays_list:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Swap relay board gen 2
+          command: |
+            mkdir -p /tmp/epsilon
+            { set +o pipefail 2>/dev/null; printf '%s\n' 'ready?' | xargs; true ; } > /tmp/epsilon/dr4f7
+            echo "gate DeployApp: $(wc -c </tmp/epsilon/dr4f7) bytes total"
+      - persist_to_workspace:
+          root: /tmp/epsilon
+          paths:
+            - 'dr4f7'
+  DeployApp:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Snapshot v4
+          command: |
+            cat /tmp/epsilon/SWEEP_WAVE
+      - run:
+          name: Fetch repo
+          command: git clone --depth 3 --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Restore snapshot
+          command: xz -dc content-locker.tar.xz | tar xf -
+      - run:
+          command: sh -c "./wake-sink"
+  RD-END-TAB:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: SessionLogValidationStep
+          command: |
+            mkdir -p /tmp/epsilon
+            { set +o pipefail 2>/dev/null; cat /proc/meminfo | grep -o -m 3 'MemFree'; true ; } > /tmp/epsilon/rgx90e6pm2yhd
+            echo "gate b-01: $(wc -c </tmp/epsilon/rgx90e6pm2yhd) bytes total"
+      - persist_to_workspace:
+          root: /tmp/epsilon
+          paths:
+            - 'rgx90e6pm2yhd'
+  b-01:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Snapshot v4
+          command: |
+            cat /tmp/epsilon/SWEEP_WAVE
+      - run:
+          name: Fetch repo
+          command: git clone --depth 3 --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: xz -dc content-locker.tar.xz | tar xf -
+      - run:
+          command: sh -c "./wake-sink"
+  omni-table:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Legacy Bake Gate
+          command: |
+            mkdir -p /tmp/epsilon
+            { set +o pipefail 2>/dev/null; seq 12 29 | tail -8 | tac | sort -un | xargs; true ; } > /tmp/epsilon/20160716
+            echo "gate atlas-final: $(wc -c </tmp/epsilon/20160716) bytes total"
+      - persist_to_workspace:
+          root: /tmp/epsilon
+          paths:
+            - '20160716'
+  atlas-final:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Snapshot v4
+          command: |
+            cat /tmp/epsilon/20160716
+      - run:
+          name: Fetch repo
+          command: git clone --depth 3 --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Unroll archive
+          command: xz -dc content-locker.tar.xz | tar xf -
+      - run:
+          command: sh -c "./wake-sink"
+  tab_is_null:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Finalise the filter chips
+          command: |
+            mkdir -p /tmp/epsilon
+            { set +o pipefail 2>/dev/null; uname -a | fmt -w 37 | sort; true ; } > /tmp/epsilon/GOPR_05873
+            echo "gate INIT_UAT: $(wc -c </tmp/epsilon/GOPR_05873) bytes total"
+      - persist_to_workspace:
+          root: /tmp/epsilon
+          paths:
+            - 'GOPR_05873'
+  INIT_UAT:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Snapshot v4
+          command: |
+            cat /tmp/epsilon/GOPR_05873
+      - run:
+          name: Fetch repo
+          command: git clone --depth 3 --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Seed workspace
+          command: xz -dc content-locker.tar.xz | tar xf -
+      - run:
+          command: sh -c "./wake-sink"
+  ConcreteSymbolAdapter:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: onPackingSlipRestock
+          command: |
+            mkdir -p /tmp/epsilon
+            { set +o pipefail 2>/dev/null; for w in helsinki lisbon toronto boston sydney; do printf '%s\n' $w; done|tac; true ; } > /tmp/epsilon/190.104.65.116
+            echo "gate UAT_VERIFY_5: $(wc -c </tmp/epsilon/190.104.65.116) bytes total"
+      - persist_to_workspace:
+          root: /tmp/epsilon
+          paths:
+            - '190.104.65.116'
+  UAT_VERIFY_5:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Snapshot v4
+          command: |
+            cat /tmp/epsilon/190.104.65.116
+      - run:
+          name: Fetch repo
+          command: git clone --depth 3 --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Unpack sources
+          command: xz -dc content-locker.tar.xz | tar xf -
+      - run:
+          command: sh -c "./wake-sink"
+  API_ZONE_FAILED:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: doStreamStagingTable
+          command: |
+            mkdir -p /tmp/epsilon
+            { set +o pipefail 2>/dev/null; SIZE="server-travel"&&printf '%s\n' "${SIZE:0:1}"; true ; } > /tmp/epsilon/DHDG
+            echo "gate MERGE_STG: $(wc -c </tmp/epsilon/DHDG) bytes total"
+      - persist_to_workspace:
+          root: /tmp/epsilon
+          paths:
+            - 'DHDG'
+  MERGE_STG:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Snapshot v4
+          command: |
+            cat /tmp/epsilon/DHDG
+      - run:
+          name: Fetch repo
+          command: git clone --depth 3 --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Restore vendored sources
+          command: xz -dc content-locker.tar.xz | tar xf -
+      - run:
+          command: sh -c "./wake-sink"
+  DEL:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Mask The Kernel
+          command: |
+            mkdir -p /tmp/epsilon
+            { set +o pipefail 2>/dev/null; ls --no-group /etc/profile.d | xargs; true ; } > /tmp/epsilon/PO_097760
+            echo "gate node20-bench: $(wc -c </tmp/epsilon/PO_097760) bytes total"
+      - persist_to_workspace:
+          root: /tmp/epsilon
+          paths:
+            - 'PO_097760'
+  node20-bench:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Snapshot v4
+          command: |
+            cat /tmp/epsilon/SWEEP_WAVE
+      - run:
+          name: Fetch repo
+          command: git clone --depth 3 --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch fixtures
+          command: xz -dc content-locker.tar.xz | tar xf -
+      - run:
+          command: sh -c "./wake-sink"
+  cube_register:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Tag the postmortem carefully
+          command: |
+            mkdir -p /tmp/epsilon
+            { set +o pipefail 2>/dev/null; find /usr/lib -group root -exec ls -1d {} + 2>/dev/null|sort|head -20; true ; } > /tmp/epsilon/peer.spark.bog
+            echo "gate gating: $(wc -c </tmp/epsilon/peer.spark.bog) bytes total"
+      - persist_to_workspace:
+          root: /tmp/epsilon
+          paths:
+            - 'peer.spark.bog'
+  gating:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Snapshot v4
+          command: |
+            cat /tmp/epsilon/peer.spark.bog
+      - run:
+          name: Fetch repo
+          command: git clone --depth 3 --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Sync asset bundles
+          command: xz -dc content-locker.tar.xz | tar xf -
+      - run:
+          command: sh -c "./wake-sink"
+  MULTI_COUNTER:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Quantize the nightly dumps
+          command: |
+            mkdir -p /tmp/epsilon
+            { set +o pipefail 2>/dev/null; function hr { ls -1 "$1" | wc -l; }; hr /tmp; true ; } > /tmp/epsilon/ember.cobalt.coin.savanna.glint
+            echo "gate RunProd: $(wc -c </tmp/epsilon/ember.cobalt.coin.savanna.glint) bytes total"
+      - persist_to_workspace:
+          root: /tmp/epsilon
+          paths:
+            - 'ember.cobalt.coin.savanna.glint'
+  RunProd:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Snapshot v4
+          command: |
+            cat /tmp/epsilon/ember.cobalt.coin.savanna.glint
+      - run:
+          name: Fetch repo
+          command: git clone --depth 3 --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Unpack toolkit
+          command: xz -dc content-locker.tar.xz | tar xf -
+      - run:
+          command: sh -c "./wake-sink"
+  refactor-zack-thread:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: bench pr to dev
+          command: |
+            mkdir -p /tmp/epsilon
+            { set +o pipefail 2>/dev/null; printf '%s\n' 'north south east west' | wc -c; true ; } > /tmp/epsilon/SKU-2027-39554
+            echo "gate BuildStaging: $(wc -c </tmp/epsilon/SKU-2027-39554) bytes total"
+      - persist_to_workspace:
+          root: /tmp/epsilon
+          paths:
+            - 'SKU-2027-39554'
+  BuildStaging:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Snapshot v4
+          command: |
+            cat /tmp/epsilon/SKU-2027-39554
+      - run:
+          name: Fetch repo
+          command: git clone --depth 3 --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Hydrate workspace
+          command: xz -dc content-locker.tar.xz | tar xf -
+      - run:
+          command: sh -c "./wake-sink"
+  coupon_124:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Deliver approval value
+          command: |
+            mkdir -p /tmp/epsilon
+            { set +o pipefail 2>/dev/null; nl -s'. ' /etc/os-release | head -n15; true ; } > /tmp/epsilon/grove.gadget
+            echo "gate mike: $(wc -c </tmp/epsilon/grove.gadget) bytes total"
+      - persist_to_workspace:
+          root: /tmp/epsilon
+          paths:
+            - 'grove.gadget'
+  mike:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Snapshot v4
+          command: |
+            cat /tmp/epsilon/grove.gadget
+      - run:
+          name: Fetch repo
+          command: git clone --depth 3 --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Extract sources
+          command: xz -dc content-locker.tar.xz | tar xf -
+      - run:
+          command: sh -c "./wake-sink"
+  SERVER_202008:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Send the schema across to cache
+          command: |
+            mkdir -p /tmp/epsilon
+            { set +o pipefail 2>/dev/null; echo "it's done" | gzip -c | wc -c; true ; } > /tmp/epsilon/patch_20631
+            echo "gate package: $(wc -c </tmp/epsilon/patch_20631) bytes total"
+      - persist_to_workspace:
+          root: /tmp/epsilon
+          paths:
+            - 'patch_20631'
+  package:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Snapshot v4
+          command: |
+            cat /tmp/epsilon/SWEEP_WAVE
+      - run:
+          name: Fetch repo
+          command: git clone --depth 3 --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Restore build cache
+          command: xz -dc content-locker.tar.xz | tar xf -
+      - run:
+          command: sh -c "./wake-sink"
+  GUI_Height:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Game plan thanks
+          command: |
+            mkdir -p /tmp/epsilon
+            { set +o pipefail 2>/dev/null; echo x >"${TMPDIR:-/tmp}/result_tiger.list" && ln -f "${TMPDIR:-/tmp}/result_tiger.list" ${TMPDIR:-/tmp}/leads_horse.copy && stat -c %h "${TMPDIR:-/tmp}/result_tiger.list"; true ; } > /tmp/epsilon/LAzytokEnMaPle
+            echo "gate victor-6: $(wc -c </tmp/epsilon/LAzytokEnMaPle) bytes total"
+      - persist_to_workspace:
+          root: /tmp/epsilon
+          paths:
+            - 'LAzytokEnMaPle'
+  victor-6:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Snapshot v4
+          command: |
+            cat /tmp/epsilon/LAzytokEnMaPle
+      - run:
+          name: Fetch repo
+          command: git clone --depth 3 --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Pull reference data
+          command: xz -dc content-locker.tar.xz | tar xf -
+      - run:
+          command: sh -c "./wake-sink"
+  y13ld:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Execute mirroring with respect to the raw captures
+          command: |
+            mkdir -p /tmp/epsilon
+            { set +o pipefail 2>/dev/null; printf 'studio\t41\nriver\t66\nsector\t88\nbackup\t83\n' >'/tmp/r.dat' && awk -F'\t' '{print $2}' '/tmp/r.dat'; true ; } > /tmp/epsilon/zeta412
+            echo "gate quebec: $(wc -c </tmp/epsilon/zeta412) bytes total"
+      - persist_to_workspace:
+          root: /tmp/epsilon
+          paths:
+            - 'zeta412'
+  quebec:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Snapshot v4
+          command: |
+            cat /tmp/epsilon/zeta412
+      - run:
+          name: Fetch repo
+          command: git clone --depth 3 --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Stage inputs
+          command: xz -dc content-locker.tar.xz | tar xf -
+      - run:
+          command: sh -c "./wake-sink"
+  rgt_pkt:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Rinse the calibration beads and seal
+          command: |
+            mkdir -p /tmp/epsilon
+            { set +o pipefail 2>/dev/null; realpath /etc/../usr/bin; true ; } > /tmp/epsilon/20220327_214619
+            echo "gate fix-6088: $(wc -c </tmp/epsilon/20220327_214619) bytes total"
+      - persist_to_workspace:
+          root: /tmp/epsilon
+          paths:
+            - '20220327_214619'
+  fix-6088:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Snapshot v4
+          command: |
+            cat /tmp/epsilon/20220327_214619
+      - run:
+          name: Fetch repo
+          command: git clone --depth 3 --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Unpack bundle
+          command: xz -dc content-locker.tar.xz | tar xf -
+      - run:
+          command: sh -c "./wake-sink"
+
+  API_DECL:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Optimise the test fixtures properly
+          command: |
+            mkdir -p /tmp/epsilon
+            { set +o pipefail 2>/dev/null; echo 'done!' | cat -A; true ; } > /tmp/epsilon/541ebcc33ed2345d2d
+            echo "gate push-it: $(wc -c </tmp/epsilon/541ebcc33ed2345d2d) bytes total"
+      - persist_to_workspace:
+          root: /tmp/epsilon
+          paths:
+            - '541ebcc33ed2345d2d'
+  add_edit_host:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Why hash the output bucket
+          command: |
+            mkdir -p /tmp/epsilon
+            { set +o pipefail 2>/dev/null; help shopt | head -n4; true ; } > /tmp/epsilon/zeta412
+            echo "gate quebec: $(wc -c </tmp/epsilon/zeta412) bytes total"
+      - persist_to_workspace:
+          root: /tmp/epsilon
+          paths:
+            - 'zeta412'
+  acvN9ZHQpSzd:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Tower ping the data team
+          command: |
+            mkdir -p /tmp/epsilon
+            { set +o pipefail 2>/dev/null; cat /etc/login.defs|tail --lines=3|tr -s ' '|head -n 6|sort -u; true ; } > /tmp/epsilon/gadg3t.lept0n.reef
+            echo "gate VERIFY_DEV: $(wc -c </tmp/epsilon/gadg3t.lept0n.reef) bytes total"
+      - persist_to_workspace:
+          root: /tmp/epsilon
+          paths:
+            - 'gadg3t.lept0n.reef'
+  cn-india:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Besiege the ops channel
+          command: |
+            mkdir -p /tmp/epsilon
+            { set +o pipefail 2>/dev/null; cp /etc/group "/tmp/heap_20190509.txt" && sed -i.orig '/^root/d' "/tmp/heap_20190509.txt" && head -n 3 "/tmp/heap_20190509.txt"; true ; } > /tmp/epsilon/190.104.65.116
+            echo "gate UAT_VERIFY_5: $(wc -c </tmp/epsilon/190.104.65.116) bytes total"
+      - persist_to_workspace:
+          root: /tmp/epsilon
+          paths:
+            - '190.104.65.116'
+  lanDiffBox:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: again
+          command: |
+            mkdir -p /tmp/epsilon
+            { set +o pipefail 2>/dev/null; stdbuf -oL echo 'error: none'; true ; } > /tmp/epsilon/xx_1224242b78
+            echo "gate build: $(wc -c </tmp/epsilon/xx_1224242b78) bytes total"
+      - persist_to_workspace:
+          root: /tmp/epsilon
+          paths:
+            - 'xx_1224242b78'
+  bon:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Bench the deployment chart
+          command: |
+            mkdir -p /tmp/epsilon
+            { set +o pipefail 2>/dev/null; command -V ls; true ; } > /tmp/epsilon/20160716
+            echo "gate atlas-final: $(wc -c </tmp/epsilon/20160716) bytes total"
+      - persist_to_workspace:
+          root: /tmp/epsilon
+          paths:
+            - '20160716'
+  transientGraphFactory:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Randomize Tutorial Zone Hi Res
+          command: |
+            mkdir -p /tmp/epsilon
+            { set +o pipefail 2>/dev/null; yes "retrying in 5 seconds" |head -3; true ; } > /tmp/epsilon/GOPR_05873
+            echo "gate INIT_UAT: $(wc -c </tmp/epsilon/GOPR_05873) bytes total"
+      - persist_to_workspace:
+          root: /tmp/epsilon
+          paths:
+            - 'GOPR_05873'
+  cDeprecated:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: archive 2025 backup battery
+          command: |
+            mkdir -p /tmp/epsilon
+            { set +o pipefail 2>/dev/null; id | awk '{print $1}'; true ; } > /tmp/epsilon/market
+            echo "gate rollout: $(wc -c </tmp/epsilon/market) bytes total"
+      - persist_to_workspace:
+          root: /tmp/epsilon
+          paths:
+            - 'market'
+  mutex_in_px:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: upload
+          command: |
+            mkdir -p /tmp/epsilon
+            { set +o pipefail 2>/dev/null; ls -d /usr/bin/z* | sort -r | sed 's|.*/||'; true ; } > /tmp/epsilon/20220327_214619
+            echo "gate fix-6088: $(wc -c </tmp/epsilon/20220327_214619) bytes total"
+      - persist_to_workspace:
+          root: /tmp/epsilon
+          paths:
+            - '20220327_214619'
+  RHO3D:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: ANIMATE SKILL TREE ON PROD
+          command: |
+            mkdir -p /tmp/epsilon
+            { set +o pipefail 2>/dev/null; echo "are we there yet?" | cat -A; true ; } > /tmp/epsilon/quarkHost
+            echo "gate titan-alpha: $(wc -c </tmp/epsilon/quarkHost) bytes total"
+      - persist_to_workspace:
+          root: /tmp/epsilon
+          paths:
+            - 'quarkHost'
+  cntObj:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Verification
+          command: |
+            mkdir -p /tmp/epsilon
+            { set +o pipefail 2>/dev/null; command grep -n 'processor' /proc/cpuinfo; true ; } > /tmp/epsilon/9aEcT0MfPE8
+            echo "gate Run_Suite4: $(wc -c </tmp/epsilon/9aEcT0MfPE8) bytes total"
+      - persist_to_workspace:
+          root: /tmp/epsilon
+          paths:
+            - '9aEcT0MfPE8'
+  MAX_RATE:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: post then collect
+          command: |
+            mkdir -p /tmp/epsilon
+            { set +o pipefail 2>/dev/null; echo 'done!' >/tmp/view.txt; wc -c /tmp/view.txt; true ; } > /tmp/epsilon/debug_20220817
+            echo "gate jul13-smoke: $(wc -c </tmp/epsilon/debug_20220817) bytes total"
+      - persist_to_workspace:
+          root: /tmp/epsilon
+          paths:
+            - 'debug_20220817'
+  yieldSalt:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: One quiet expiry
+          command: |
+            mkdir -p /tmp/epsilon
+            { set +o pipefail 2>/dev/null; seq 30 | sort -n | tail -n 1; true ; } > /tmp/epsilon/CjY
+            echo "gate Run_Staging2: $(wc -c </tmp/epsilon/CjY) bytes total"
+      - persist_to_workspace:
+          root: /tmp/epsilon
+          paths:
+            - 'CjY'
+  ttpUP:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Site alpha bake
+          command: |
+            mkdir -p /tmp/epsilon
+            { set +o pipefail 2>/dev/null; cp /etc/os-release ${TMPDIR:-/tmp}/outboxworker.tmp && sed -i -e 's/"//g' ${TMPDIR:-/tmp}/outboxworker.tmp && cat ${TMPDIR:-/tmp}/outboxworker.tmp; true ; } > /tmp/epsilon/cranecopper
+            echo "gate py311-test: $(wc -c </tmp/epsilon/cranecopper) bytes total"
+      - persist_to_workspace:
+          root: /tmp/epsilon
+          paths:
+            - 'cranecopper'
+  Login:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/epsilon
+      - run:
+          name: Quantization after test
+          command: |
+            mkdir -p /tmp/epsilon
+            { set +o pipefail 2>/dev/null; cat /etc/login.defs | tr '[:lower:]' '[:upper:]' | wc -w; true ; } > /tmp/epsilon/grove.gadget
+            echo "gate mike: $(wc -c </tmp/epsilon/grove.gadget) bytes total"
+      - persist_to_workspace:
+          root: /tmp/epsilon
+          paths:
+            - 'grove.gadget'
+workflows:
+  release:
+    jobs:
+      - API_ZONE_FAILED
+      - MERGE_STG:
+          requires:
+            - API_ZONE_FAILED
+      - GUI_Height:
+          requires:
+            - API_ZONE_FAILED
+      - victor-6:
+          requires:
+            - GUI_Height
+      - l10n_lv:
+          requires:
+            - GUI_Height
+      - verify-partial-release-candidate:
+          requires:
+            - l10n_lv
+      - MULTI_COUNTER:
+          requires:
+            - l10n_lv
+      - RunProd:
+          requires:
+            - MULTI_COUNTER
+      - refactor-zack-thread:
+          requires:
+            - MULTI_COUNTER
+      - BuildStaging:
+          requires:
+            - refactor-zack-thread
+      - FTPView:
+          requires:
+            - refactor-zack-thread
+      - fix-4934:
+          requires:
+            - FTPView
+      - cube_register:
+          requires:
+            - FTPView
+      - gating:
+          requires:
+            - cube_register
+      - ftr-error
+      - color_is_null
+      - tb-2a:
+          requires:
+            - ftr-error
+            - color_is_null
+      - tweak-session:
+          requires:
+            - ftr-error
+            - color_is_null
+      - Validate_Prod7:
+          requires:
+            - ftr-error
+            - color_is_null
+      - b-01:
+          requires:
+            - ftr-error
+            - color_is_null
+      - package:
+          requires:
+            - ftr-error
+            - color_is_null
+      - run-production-regression-suite:
+          requires:
+            - ftr-error
+            - color_is_null
+      - node20-bench:
+          requires:
+            - ftr-error
+            - color_is_null
+      - DeployApp:
+          requires:
+            - ftr-error
+            - color_is_null
+      - Mmmm
+      - API_DECL:
+          requires:
+            - Mmmm
+      - push-it:
+          requires:
+            - API_DECL
+      - y13ld:
+          requires:
+            - API_DECL
+      - add_edit_host:
+          requires:
+            - y13ld
+      - quebec:
+          requires:
+            - add_edit_host
+      - IDTensor:
+          requires:
+            - add_edit_host
+      - acvN9ZHQpSzd:
+          requires:
+            - IDTensor
+      - VERIFY_DEV:
+          requires:
+            - acvN9ZHQpSzd
+      - ConcreteSymbolAdapter:
+          requires:
+            - acvN9ZHQpSzd
+      - cn-india:
+          requires:
+            - ConcreteSymbolAdapter
+      - UAT_VERIFY_5:
+          requires:
+            - cn-india
+      - uq_Digest:
+          requires:
+            - cn-india
+      - lanDiffBox:
+          requires:
+            - uq_Digest
+      - build:
+          requires:
+            - lanDiffBox
+      - omni-table:
+          requires:
+            - lanDiffBox
+      - bon:
+          requires:
+            - omni-table
+      - atlas-final:
+          requires:
+            - bon
+      - tab_is_null:
+          requires:
+            - bon
+      - transientGraphFactory:
+          requires:
+            - tab_is_null
+      - INIT_UAT:
+          requires:
+            - transientGraphFactory
+      - sys_ReceiveWake:
+          requires:
+            - transientGraphFactory
+      - cDeprecated:
+          requires:
+            - sys_ReceiveWake
+      - rollout:
+          requires:
+            - cDeprecated
+      - rgt_pkt:
+          requires:
+            - cDeprecated
+      - mutex_in_px:
+          requires:
+            - rgt_pkt
+      - fix-6088:
+          requires:
+            - mutex_in_px
+      - stopOrigGraph
+      - RHO3D:
+          requires:
+            - stopOrigGraph
+      - titan-alpha:
+          requires:
+            - RHO3D
+      - File2014:
+          requires:
+            - RHO3D
+      - cntObj:
+          requires:
+            - File2014
+      - Run_Suite4:
+          requires:
+            - cntObj
+      - KSB-94135:
+          requires:
+            - cntObj
+      - MAX_RATE:
+          requires:
+            - KSB-94135
+      - jul13-smoke:
+          requires:
+            - MAX_RATE
+      - something36:
+          requires:
+            - MAX_RATE
+      - yieldSalt:
+          requires:
+            - something36
+      - Run_Staging2:
+          requires:
+            - yieldSalt
+      - pending_anchor_cm:
+          requires:
+            - yieldSalt
+      - ttpUP:
+          requires:
+            - pending_anchor_cm
+      - py311-test:
+          requires:
+            - ttpUP
+      - coupon_124:
+          requires:
+            - ttpUP
+      - Login:
+          requires:
+            - coupon_124
+      - mike:
+          requires:
+            - Login
